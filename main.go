@@ -22,7 +22,7 @@ type (
 )
 
 const (
-	winTitle            = "vectors-4"
+	winTitle            = "fractals-1"
 	winWidth, winHeight = 500, 500
 )
 
