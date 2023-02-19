@@ -1,14 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"image/color"
 	_ "image/png"
 	"log"
 	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type (
@@ -23,22 +21,21 @@ type (
 
 const (
 	winTitle            = "fractals-1"
-	winWidth, winHeight = 500, 500
+	winWidth, winHeight = 1000, 1000
 )
 
 var c = color.RGBA{R: 0xff, G: 0xff, B: 0xff, A: 0xff}
 
 func generate(cnt int, img *ebiten.Image, p1, p2 point, sin, cos float64) *ebiten.Image {
-	if cnt == 4 {
-		ebitenutil.DrawLine(img, p1.x, p1.y, p2.x, p2.y, c)
+	if cnt == 6 {
+		img.Set(int(p1.x), int(p1.y), c)
 		return img
 	}
 	cnt++
-	fmt.Println(p1, p2)
 
 	np1, np2 := point{p1.x + (p2.x-p1.x)/3, p1.y + (p2.y-p1.y)/3}, point{p2.x - (p2.x-p1.x)/3, p2.y - (p2.y-p1.y)/3}
-	ebitenutil.DrawLine(img, p1.x, p1.y, p2.x, p2.y, c)
-	ebitenutil.DrawLine(img, np1.x, np1.y, np2.x, np2.y, color.Black)
+	// ebitenutil.DrawLine(img, p1.x, p1.y, p2.x, p2.y, c)
+	// ebitenutil.DrawLine(img, np1.x, np1.y, np2.x, np2.y, color.Black)
 
 	img = generate(cnt, img, p1, np1, sin, cos)
 	img = generate(cnt, img, np2, p2, sin, cos)
@@ -68,7 +65,7 @@ func main() {
 	ebiten.SetWindowSize(winWidth, winHeight)
 	ebiten.SetWindowResizable(true)
 	img := ebiten.NewImage(winWidth, winHeight)
-	p1, p2 := point{100, 400}, point{400, 400}
+	p1, p2 := point{70, 750}, point{930, 750}
 	var cos = math.Cos(1.04719755)
 	var sin = math.Sin(1.04719755)
 	img = generate(0, img, p1, p2, sin, cos)
