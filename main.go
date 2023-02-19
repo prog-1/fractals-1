@@ -27,12 +27,11 @@ const (
 var c = color.RGBA{R: 0xff, G: 0xff, B: 0xff, A: 0xff}
 
 func generate(cnt int, img *ebiten.Image, p1, p2 point, sin, cos float64) *ebiten.Image {
-	if cnt == 6 {
+	if cnt == 7 {
 		img.Set(int(p1.x), int(p1.y), c)
 		return img
 	}
 	cnt++
-
 	np1, np2 := point{p1.x + (p2.x-p1.x)/3, p1.y + (p2.y-p1.y)/3}, point{p2.x - (p2.x-p1.x)/3, p2.y - (p2.y-p1.y)/3}
 	// ebitenutil.DrawLine(img, p1.x, p1.y, p2.x, p2.y, c)
 	// ebitenutil.DrawLine(img, np1.x, np1.y, np2.x, np2.y, color.Black)
@@ -78,7 +77,7 @@ func main() {
 	p1.x = (x-p2.x)*cos - (y-p2.y)*sin + p2.x
 	p1.y = (x-p2.x)*sin + (y-p2.y)*cos + p2.y
 	img = generate(0, img, p1, p2, -sin, cos)
-	// img = generate(0, img, point{100, 400}, point{400, 400})
+
 	if err := ebiten.RunGame(&Game{img}); err != nil {
 		log.Fatal(err)
 	}
